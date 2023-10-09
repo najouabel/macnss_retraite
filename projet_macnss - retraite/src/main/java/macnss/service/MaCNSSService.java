@@ -47,7 +47,8 @@ public class MaCNSSService {
     }
 
     public void start() {
-//        tools.insertSalaryHistory(connection);
+        //insertSalaryHistory(Connection connection, int employeeId, double salary, String startDate)
+        //tools.insertSalaryHistory(connection, 17, 2000, "2006-02-23");
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("************************************************************");

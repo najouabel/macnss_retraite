@@ -5,6 +5,7 @@ import macnss.model.Patient;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.Month;
 
 public class CompanyDAOImpl implements CompanyDAO{
     private final Connection connection;
@@ -261,4 +262,5 @@ public class CompanyDAOImpl implements CompanyDAO{
         }
         return 0.0;
     }
+
 }

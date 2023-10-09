@@ -71,14 +71,7 @@ public class Patient extends User {
     public String getStatus() {
         return status;
     }
-    public String getRetirementStatus() {
-        if (status != null && status.equals("retired")){
-            return "retired";
-        }
-        else{
-            return "not yet retired";
-        }
-    }
+
 
     public void setStatus(String status) {
         this.status = status;

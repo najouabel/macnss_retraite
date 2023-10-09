@@ -5,6 +5,10 @@ import macnss.model.Company;
 import macnss.model.Patient;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Scanner;
 import macnss.util.tools;
 
@@ -194,4 +198,5 @@ public class CompanyService {
             System.out.println("Employee not found with Matricule: " + matriculeToUpdate);
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package macnss.util;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,25 +61,23 @@ public class tools {
             throw new IllegalArgumentException("Invalid percentage string: " + percentage);
         }
     }
-    public static void insertSalaryHistory(Connection connection) {
+    public static void insertSalaryHistory(Connection connection, int employeeId, double salary, String startDate) {
         String insertSalaryHistorySQL = "INSERT INTO salary_history (employee_id, salary, date) VALUES (?, ?, ?)";
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate parsedStartDate = LocalDate.parse(startDate, dateFormatter);
 
         try (PreparedStatement insertSalaryHistoryStatement = connection.prepareStatement(insertSalaryHistorySQL)) {
-            int employeeId = 15;
-            double salary = 20000.0;
-            LocalDate startDate = LocalDate.of(2006, Month.JANUARY, 1);
-
-            for (int i = 0; i < 156; i++) {
+            for (int i = 0; i < 100; i++) {
                 insertSalaryHistoryStatement.setInt(1, employeeId);
                 insertSalaryHistoryStatement.setDouble(2, salary);
-                insertSalaryHistoryStatement.setDate(3, java.sql.Date.valueOf(startDate));
+                insertSalaryHistoryStatement.setDate(3, java.sql.Date.valueOf(parsedStartDate));
 
                 int rowsAffected = insertSalaryHistoryStatement.executeUpdate();
                 if (rowsAffected > 0) {
-                    System.out.println("Inserted row for date: " + startDate);
+                    System.out.println("Inserted row for date: " + parsedStartDate);
                 }
 
-                startDate = startDate.plusMonths(1); // Move to the next month
+                parsedStartDate = parsedStartDate.plusMonths(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
