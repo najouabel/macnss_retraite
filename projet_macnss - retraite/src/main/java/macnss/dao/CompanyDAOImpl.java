@@ -235,7 +235,7 @@ public class CompanyDAOImpl implements CompanyDAO{
         }
         return false;
     }
-    public double calculateAverageSalary(int employeeId) {
+    public float calculateAverageSalary(int employeeId) {
         String querySQL = "SELECT salary FROM salary_history WHERE employee_id = ? ORDER BY date DESC LIMIT 96";
 
         try (PreparedStatement queryStatement = connection.prepareStatement(querySQL)) {
@@ -253,14 +253,14 @@ public class CompanyDAOImpl implements CompanyDAO{
             }
 
             if (count > 0) {
-                return totalSalary / count;
+                return (float)totalSalary / count;
             } else {
-                return 0.0;
+                return (float)0.0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0.0;
+        return (float)0.0;
     }
 
 }

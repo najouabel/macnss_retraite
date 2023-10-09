@@ -53,14 +53,16 @@ public class PatientService {
     }
 
     public void checkRetirementStatus(Patient patient) {
-        if (checkEmployeeRetirementStatus(patient) ) {
+        double salaire =checkEmployeeRetirementStatus(patient);
+        if (salaire!= -1.0 ) {
             System.out.println(" Retirement salary is : " + patient.getSalary());
         } else {
             System.out.println("vous navez pas encore retraiter");
         }
     }
 
-    public boolean checkEmployeeRetirementStatus(Patient employee) {
+    public double checkEmployeeRetirementStatus(Patient employee) {
+
         LocalDate currentDate = LocalDate.now();
         LocalDate birthDate = LocalDate.parse(employee.getBirthDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         long yearsBetween = ChronoUnit.YEARS.between(birthDate, currentDate);
@@ -68,25 +70,27 @@ public class PatientService {
             int totalDaysWorked = employee.getDays();
 
             if (totalDaysWorked >= 1320) {
-                double averageSalary = CompanyDAOImpl.calculateAverageSalary(employee.getId());
+                float averageSalary = CompanyDAOImpl.calculateAverageSalary(employee.getId());
                 int additionalDays = Math.max(totalDaysWorked - 3240, 0);
-                double additionalPensionRate = (double) additionalDays / 216;
+                float additionalPensionRate = (float) additionalDays / 216;
 
-                double pensionRate = Math.min(50 + additionalPensionRate, 70);
+                float pensionRate = Math.min(50 + additionalPensionRate, 70);
 
-                double retirementSalary = (pensionRate / 100) * averageSalary;
+                float retirementSalary = (pensionRate / 100) * averageSalary;
+
                 if (retirementSalary >= 6000) {
                     retirementSalary = 6000;
                 } else if (retirementSalary <= 1000) {
                     retirementSalary = 1000;
                 }
                 CompanyDAOImpl.updateRetirementStatusAndSalary(employee.getId(), retirementSalary);
-                return true;
+
+                return retirementSalary;
 
             }
 
         }
-        return false;
+        return -1.0;
     }
 }
 

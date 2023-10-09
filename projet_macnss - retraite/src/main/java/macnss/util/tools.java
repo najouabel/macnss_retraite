@@ -57,30 +57,8 @@ public class tools {
 
             return result;
         } catch (NumberFormatException e) {
-            // Handle invalid input, such as non-numeric or improperly formatted strings
             throw new IllegalArgumentException("Invalid percentage string: " + percentage);
         }
     }
-    public static void insertSalaryHistory(Connection connection, int employeeId, double salary, String startDate) {
-        String insertSalaryHistorySQL = "INSERT INTO salary_history (employee_id, salary, date) VALUES (?, ?, ?)";
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate parsedStartDate = LocalDate.parse(startDate, dateFormatter);
 
-        try (PreparedStatement insertSalaryHistoryStatement = connection.prepareStatement(insertSalaryHistorySQL)) {
-            for (int i = 0; i < 100; i++) {
-                insertSalaryHistoryStatement.setInt(1, employeeId);
-                insertSalaryHistoryStatement.setDouble(2, salary);
-                insertSalaryHistoryStatement.setDate(3, java.sql.Date.valueOf(parsedStartDate));
-
-                int rowsAffected = insertSalaryHistoryStatement.executeUpdate();
-                if (rowsAffected > 0) {
-                    System.out.println("Inserted row for date: " + parsedStartDate);
-                }
-
-                parsedStartDate = parsedStartDate.plusMonths(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

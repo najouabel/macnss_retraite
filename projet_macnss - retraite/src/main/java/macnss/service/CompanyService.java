@@ -32,6 +32,7 @@ public class CompanyService {
             System.out.println("1. Add an Employee");
             System.out.println("2. delete an Employee");
             System.out.println("3. Update Employee Salary");
+            System.out.println("4. Update Employee workdays");
             System.out.println("5. Logout");
 
             System.out.print("Enter your choice: ");
